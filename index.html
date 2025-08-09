@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>AI Assistent</title>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Web AI Assistant</h1>
+
+            <!-- Sessão destinada às configurações de API KEY e modelo da IA -->
+            <div class="config-section">
+                <div class="input-group api-key-group">
+                    <label for="apiKey">🔑 API Key:</label>
+                    <div class="api-key-wrapper">
+                        <input type="password" id="apiKey" placeholder="Cole sua API Key aqui">
+                        <div class="validate-icon" id="validateIcon" title="Clique para validar API Key">🔍</div>
+                    </div>
+                     <div class="api-status" id="apiStatus" style="display: none;">
+                        <span id="apiStatusIcon"></span>
+                        <span id="apiStatusText"></span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="modelSelect">🧠 Modelo de IA:</label>
+                    <select name="" id="modelSelect">
+                        <option value="gemini-1.5-flash">Gemini 2.5 Flash</option>
+                        <option value="gemini-1.5-flash">Gemini 2.5 Pro</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Sessão avisando que o sistema só funciona com API Key Gemini -->
+            <div class="info-system">
+                💡 <strong>Dica:</strong> Para usar a aplicação, obtenha a chave gratuita em <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a>
+            </div>
+
+            <!-- Sessão onde a pergunta será feita -->
+            <div class="question-section">
+                <div class="input-group">
+                    <label for="questionInput">💬 Sua pergunta:</label>
+                    <textarea name="questionInput" id="questionInput" placeholder="Digite sua pergunta aqui..."></textarea>
+                </div>
+
+                <div class="question-controls">
+                    <div class="character-counter">
+                        <span id="characterCount">0</span> caracteres
+                    </div>
+                    <button id="askButton" type="button">Perguntar</button>
+                </div>
+            </div>
+
+            <!-- Sessão destinada ao carregamento e mensagens de erro -->
+            <div class="loading" id="loadingDiv">
+                <div class="spinner">
+                    <span>Processando sua pergunta...</span>
+                </div>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+
+            <!-- Sessão de respostas -->
+            <div class="response-section" id="responseSection">
+                <div class="question-display" id="questionDisplay">
+                    <h3>📝 Sua pergunta:</h3>
+                    <p id="displayedQuestion"></p>
+                </div>
+
+                <div class="response-content" id="responseContent"></div>
+
+                <div class="response-actions">
+                    <button id="copyButton" class="action-response">📋 Copiar Resposta</button>
+                    <button id="clearButton" class="action-response">
+                        🗑️ Nova Pergunta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

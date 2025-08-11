@@ -23,11 +23,12 @@ Permite inserir e validar a chave da API, escolher o modelo, escrever a pergunta
 
 ## Estrutura do Projeto
 
+```
 projeto-ia/
 ├── index.html # Estrutura da página
 ├── style.css # Estilos da interface
 └── script.js # Lógica e integração com a API
-
+```
 
 ---
 

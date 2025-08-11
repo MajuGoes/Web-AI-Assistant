@@ -56,7 +56,7 @@ projeto-ia/
 
 1. **Baixe ou clone** este repositório
     ```bash
-    git clone https://github.com/seu-usuario/projeto-ia.git
+    git clone https://github.com/MajuGoes/Web-AI-Assistant.git
     ```
 2. Abra o arquivo `index.html` no navegador
 3. Cole sua **API Key** no campo indicado

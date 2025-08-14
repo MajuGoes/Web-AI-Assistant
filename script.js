@@ -1,8 +1,3 @@
-import { GoogleGenAI } from "@google/genai";
-// Espera a página carregar tudo antes de rodar o JS
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
 
    
@@ -27,20 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyButton = document.getElementById('copyButton');
     const clearButton = document.getElementById('clearButton');
 
-    console.log(apiKeyInput)
-    
-    const ai = new GoogleGenAI({ apiKey: apiKeyInput });
-        
-    async function main() {
-      const response = await ai.models.generateContent({
-        model: modelSelect,
-
-        contents: "Explain how AI works in a few words",
-      });
-      console.log(response.text);
-    }
-    
-    main();
+  
 
     // Guarda a API Key se já tiver salva no navegador
     let validatedApiKey = localStorage.getItem('apiKey');

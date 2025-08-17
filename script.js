@@ -35,9 +35,22 @@ document.addEventListener("DOMContentLoaded", () => {
     apiStatus.style.display = "flex";
   };
 
+  const callApi = async (model, apiKey, question) => {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contents: [{ parts: [{ text: question }] }] }),
+      }
+    );
+    const data = await response.json();
+    return { response, data };
+  };
+
   const handleAskQuestion = async () => {
     const question = questionInput.value.trim();
-    const model = modelSelect.value;
+    let model = modelSelect.value;
     let apiKey = apiKeyInput.value.trim();
 
     if (!apiKey) {
@@ -60,24 +73,19 @@ document.addEventListener("DOMContentLoaded", () => {
     askButton.disabled = true;
 
     try {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ contents: [{ parts: [{ text: question }] }] }),
-        }
-      );
-
-      const data = await response.json();
+      let { response, data } = await callApi(model, apiKey, question);
 
       if (
-        response.status === 429 ||
-        data?.error?.status === "RESOURCE_EXHAUSTED"
+        model.includes("pro") &&
+        (response.status === 429 || data?.error?.status === "RESOURCE_EXHAUSTED")
       ) {
-        throw new Error(
-          "⚠️ Limite diário atingido. Tente novamente amanhã ou troque sua API Key."
+        showToast(
+          errorMessage,
+          "⚠️ Modelo Pro indisponível no seu plano. Trocando para Flash..."
         );
+        model = "gemini-1.5-flash-latest";
+        modelSelect.value = model;
+        ({ response, data } = await callApi(model, apiKey, question));
       }
 
       if (!response.ok) {
@@ -156,6 +164,27 @@ document.addEventListener("DOMContentLoaded", () => {
     responseSection.classList.remove("show");
     characterCount.textContent = "0";
     askButton.disabled = true;
+  });
+
+  //  trocar o modelo 
+  modelSelect.addEventListener("change", () => {
+    const selectedModel = modelSelect.value;
+    const apiKey = apiKeyInput.value.trim();
+
+    const isFreeKey = apiKey.startsWith("AIza") || apiKey === "";
+
+    if (selectedModel.includes("pro") && isFreeKey) {
+      modelSelect.value = "gemini-1.5-flash-latest";
+
+      // atraso mínimo pra garantir exibição
+      setTimeout(() => {
+        showToast(
+          errorMessage,
+          "⚠️ Este modelo requer plano Pro. Foi trocado automaticamente para Flash.",
+          5000
+        );
+      }, 50);
+    }
   });
 
   askButton.disabled = true;

@@ -69,8 +69,6 @@ projeto-ia/
 
 ##  Observações
 
-- A validação da API Key no código atual é **simulada** (apenas verifica tamanho da chave).  
-  Para validar de verdade, é necessário fazer uma chamada de teste para a API.
 - Não compartilhe sua API Key publicamente.
 - Este projeto foi desenvolvido para fins educacionais e pode ser adaptado para outras APIs.
 
